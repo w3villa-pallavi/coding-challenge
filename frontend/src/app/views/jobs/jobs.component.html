@@ -1,0 +1,62 @@
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+		    Jobs
+		    <a (click)="addJob(jobFormPopup)" class="btn btn-primary pull-right text-white">Add New Job</a>
+		  </div>
+
+		  <div class="card-body">
+		    <table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">Title</th>
+				      <th scope="col">Description</th>
+				      <th scope="col">Action</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr *ngFor="let job of jobs">
+				      <th scope="row">{{job.id}}</th>
+				      <td>{{job.title}}</td>
+				      <td>{{job.description}}</td>
+				      <td><a class="text-primary" (click)="editJob(job, jobFormPopup)">Edit</a>&nbsp;<a class="text-primary" (click)="deleteJob(job)">Delete</a></td>
+				    </tr>
+				  </tbody>
+				</table>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<ng-template #jobFormPopup let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{jobPopupTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit(jobForm.value)">
+    	<div class="form-group">
+        <label for="name">Title</label>
+        <div class="input-group">
+          <input id="name" class="form-control" formControlName="title" type="text">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <div class="input-group">
+          <textarea id="description" class="form-control" formControlName="description"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+		    <button type="submit" class="btn btn-outline-dark">Save</button>
+		  </div>
+    </form>
+  </div>
+  
+</ng-template>
+
+<app-error-popup [errorData]="errorData"></app-error-popup>

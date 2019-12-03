@@ -8,11 +8,22 @@ module.exports = function (app) {
   const job = sequelizeClient.define('job', {
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: {
+          msg: 'Title cannot be empty'
+        }
+      }
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Description cannot be empty'
+        }
+      }
     }
   }, {
     hooks: {

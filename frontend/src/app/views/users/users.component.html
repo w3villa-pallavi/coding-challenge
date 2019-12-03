@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+		    Users
+		    <a (click)="addUser(userFormPopup)" class="btn btn-primary pull-right text-white">Add New User</a>
+		  </div>
+
+		  <div class="card-body">
+		    <table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Date of Birth</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">Gender</th>
+				      <th scope="col">Hourly Rate</th>
+				      <th scope="col">Action</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr *ngFor="let user of users">
+				      <th scope="row">{{user.id}}</th>
+				      <td>{{user.name}}</td>
+				      <td>{{user.dateOfBirth | date}}</td>
+				      <td>{{user.email}}</td>
+				      <td>{{user.gender}}</td>
+				      <td>{{user.hourlyRate}}</td>
+				      <td><a class="text-primary" (click)="editUser(user, userFormPopup)">Edit</a>&nbsp;<a class="text-primary" (click)="deleteUser(user)">Delete</a></td>
+				    </tr>
+				  </tbody>
+				</table>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<ng-template #userFormPopup let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{userPopupTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+    	<div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input id="name" class="form-control" formControlName="name" type="text">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" formControlName="dateOfBirth" [(ngModel)]="userForm.value.dateOfBirth">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Email</label>
+        <div class="input-group">
+          <input id="email" class="form-control" formControlName="email" type="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Gender</label>
+        <div class="input-group">
+        	<select id="gender" formControlName="gender">
+            <option *ngFor="let gender of genders" [value]="gender.value" [selected]="currentUser?.gender">{{gender.text}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">Hourly Rate</label>
+        <div class="input-group">
+          <input id="hourlyRate" class="form-control" formControlName="hourlyRate" type="number">
+        </div>
+      </div>
+      <div class="modal-footer">
+		    <button type="submit" class="btn btn-outline-dark">Save</button>
+		  </div>
+    </form>
+  </div>
+  
+</ng-template>
+
+<app-error-popup [errorData]="errorData"></app-error-popup>

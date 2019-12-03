@@ -6,5 +6,5 @@
     "default": 10,
     "max": 50
   },
-  "mysql": "mysql://root:pjzlbina@localhost/codingchallenge"
+  "mysql": "mysql://root:root@localhost/codingchallenge"
 }
